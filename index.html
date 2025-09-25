@@ -1,157 +1,183 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PR3TACK Navigator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f9;
-      color: #333;
-    }
-    header {
-      background-color: #2c3e50;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    h1 {
-      margin: 0;
-    }
-    table {
-      width: 90%;
-      margin: 20px auto;
-      border-collapse: collapse;
-      background-color: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background-color: #34495e;
-      color: white;
-    }
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-    tr:hover {
-      background-color: #f1f1f1;
-    }
-    .filter-container {
-      width: 90%;
-      margin: 20px auto;
-      display: flex;
-      justify-content: space-between;
-    }
-    .filter-container input {
-      width: 48%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-  </style>
-  <script>
-    function filterTable() {
-      let tacticInput = document.getElementById("tacticFilter").value.toLowerCase();
-      let techInput = document.getElementById("techFilter").value.toLowerCase();
-      let table = document.getElementById("pr3tackTable");
-      let rows = table.getElementsByTagName("tr");
-
-      for (let i = 1; i < rows.length; i++) {
-        let cells = rows[i].getElementsByTagName("td");
-        let tactic = cells[0].textContent.toLowerCase();
-        let technique = cells[1].textContent.toLowerCase();
-        if (tactic.includes(tacticInput) && technique.includes(techInput)) {
-          rows[i].style.display = "";
-        } else {
-          rows[i].style.display = "none";
-        }
-      }
-    }
-  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PR3TACK — Preemptive Tactics & Countermeasures</title>
+  <meta name="description" content="PR3TACK is an open knowledge base cataloguing plausible, unobserved adversary TTPs to enable proactive defense.">
+  <meta property="og:title" content="PR3TACK">
+  <meta property="og:description" content="Preemptive Tactics & Countermeasures Knowledgebase">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/og.png">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="icon" href="assets/favicon.svg">
+  <link rel="preload" href="css/styles.css" as="style">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <header>
-    <h1>PR3TACK v0.1 Navigator</h1>
-    <p>Explore plausible TTPs and preemptive defenses</p>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#" class="brand">
+        <img src="assets/logo.svg" alt="PR3TACK logo" class="logo">
+        <span>PR3TACK</span>
+      </a>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#matrix">Matrix</a>
+        <a href="#join">Join</a>
+        <a href="#contribute">Contribute</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://github.com/your-org/pr3tack" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <button class="theme-toggle" aria-label="Toggle theme" id="themeToggle">🌓</button>
+    </div>
   </header>
 
-  <div class="filter-container">
-    <input type="text" id="tacticFilter" onkeyup="filterTable()" placeholder="Filter by Tactic">
-    <input type="text" id="techFilter" onkeyup="filterTable()" placeholder="Filter by Technique">
-  </div>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Preemptive Tactics &amp; Countermeasures</h1>
+        <p class="lead">A forward-looking knowledge base cataloguing plausible, yet unobserved adversary TTPs — designed to complement MITRE ATT&amp;CK and enable proactive defense.</p>
+        <div class="cta">
+          <a class="btn primary" href="#matrix">Explore Matrix</a>
+          <a class="btn" href="#contribute">Contribute</a>
+        </div>
+      </div>
+      <div class="grid-bg" aria-hidden="true"></div>
+    </section>
 
-  <table id="pr3tackTable">
-    <thead>
-      <tr>
-        <th>Tactic</th>
-        <th>Technique</th>
-        <th>Feasibility</th>
-        <th>Preemptive Defense</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Execution</td>
-        <td>BIOS Config Trigger Payloads</td>
-        <td>Low</td>
-        <td>Enforce BIOS password & Secure Boot; audit BIOS config changes.</td>
-      </tr>
-      <tr>
-        <td>Persistence</td>
-        <td>Abuse of Windows Atom Tables</td>
-        <td>High</td>
-        <td>Monitor Global Atom Table API calls and registry changes.</td>
-      </tr>
-      <tr>
-        <td>Privilege Escalation</td>
-        <td>Exploit Virtual Device Drivers (VDDs)</td>
-        <td>Medium</td>
-        <td>Restrict loading of unsigned drivers; enable Device Guard.</td>
-      </tr>
-      <tr>
-        <td>Defense Evasion</td>
-        <td>Cloud Metadata API Overloading</td>
-        <td>Medium</td>
-        <td>Limit access to cloud metadata; audit API calls for anomalies.</td>
-      </tr>
-      <tr>
-        <td>Command & Control</td>
-        <td>Bluetooth HID Covert Channels</td>
-        <td>Low</td>
-        <td>Disable unnecessary Bluetooth services; monitor HID traffic.</td>
-      </tr>
-      <tr>
-        <td>Discovery</td>
-        <td>Browser Extension Enumeration via IPC Abuse</td>
-        <td>Medium</td>
-        <td>Limit extension API privileges; monitor inter-process communications.</td>
-      </tr>
-      <tr>
-        <td>Collection</td>
-        <td>Abuse of Clipboard History Services</td>
-        <td>High</td>
-        <td>Monitor clipboard access frequency; enforce clipboard isolation.</td>
-      </tr>
-      <tr>
-        <td>Exfiltration</td>
-        <td>Leveraging Screen Reader APIs for Data Leak</td>
-        <td>Medium</td>
-        <td>Enforce signed driver use for accessibility APIs.</td>
-      </tr>
-      <tr>
-        <td>Lateral Movement</td>
-        <td>Software Update Supply Chain Piggybacking (Unpopular Apps)</td>
-        <td>Medium</td>
-        <td>Validate software update servers; scan binaries for tampering.</td>
-      </tr>
-    </tbody>
-  </table>
+    <section id="about" class="section">
+      <div class="container two-col">
+        <div>
+          <h2>What is PR3TACK?</h2>
+          <p><strong>PR3TACK</strong> is an openly accessible knowledge base that catalogs <em>plausible but unobserved</em> adversary tactics, techniques, and procedures (TTPs). It complements existing frameworks by anticipating emerging threat vectors and grounding <em>preemptive</em> countermeasures.</p>
+          <ul>
+            <li>Supports academic research, government policy, and industry practice</li>
+            <li>Informs forward-looking threat models and resilience strategies</li>
+            <li>Encourages community curation, transparency, and reproducibility</li>
+          </ul>
+        </div>
+        <aside class="card">
+          <h3>Design Principles</h3>
+          <ol>
+            <li><strong>Plausibility-first</strong> (physics/OS/legal constraints)</li>
+            <li><strong>Countermeasure-oriented</strong> (testable mitigations)</li>
+            <li><strong>Traceable provenance</strong> (citations &amp; rationale)</li>
+            <li><strong>Open by default</strong> (permissive license)</li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <section id="matrix" class="section">
+      <div class="container">
+        <h2>The Matrix</h2>
+        <p>Browse a seed set of tactics and techniques. Filter by tactic, feasibility, or search keywords. Click any row to expand full details.</p>
+
+        <div class="filters">
+          <label>
+            Tactic
+            <select id="filterTactic">
+              <option value="">All</option>
+            </select>
+          </label>
+          <label>
+            Feasibility
+            <select id="filterFeasibility">
+              <option value="">All</option>
+              <option>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+            </select>
+          </label>
+          <label class="search">
+            <input id="searchBox" type="search" placeholder="Search…">
+          </label>
+        </div>
+
+        <div class="table-wrap">
+          <table id="matrixTable" class="data-table">
+            <thead>
+              <tr>
+                <th>Tactic</th>
+                <th>Technique</th>
+                <th>Feasibility</th>
+                <th>Preemptive Defense</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="join" class="section alt">
+      <div class="container two-col">
+        <div>
+          <h2>CSIRT Membership</h2>
+          <p>Operational teams can join as members to receive <em>early access</em> to new entries before public release, plus curated alerts and implementation notes.</p>
+          <ul>
+            <li>Eligibility: accredited CSIRTs and trusted security teams</li>
+            <li>Benefits: pre-release TTPs, reference implementations, private briefings</li>
+            <li>Expectations: feedback, anonymized telemetry, peer review</li>
+          </ul>
+          <p><a class="btn" href="mailto:info@pr3tack.org">Contact us</a></p>
+        </div>
+        <aside class="card">
+          <h3>Contributor Path</h3>
+          <p>Researchers and practitioners can propose additions via GitHub. See the <a href="#contribute">Contribute</a> section for workflow and formatting.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="contribute" class="section">
+      <div class="container">
+        <h2>Contribute</h2>
+        <ol>
+          <li>Fork the GitHub repository</li>
+          <li>Add or edit JSON entries under <code>/data</code></li>
+          <li>Open a pull request with rationale, references, and testable defenses</li>
+        </ol>
+        <pre><code>{
+  "tactic": "Persistence",
+  "technique": "Abuse of Windows Atom Tables",
+  "feasibility": "High",
+  "defense": "Monitor Global Atom Table API calls; restrict unexpected consumers; alert on anomalous inter-process atom usage.",
+  "rationale": "Cross-process storage &amp; signaling; living-off-the-land potential; seen in research variants.",
+  "references": ["https://..."],
+  "status": "plausible-unobserved",
+  "reviewers": ["handle1","handle2"],
+  "last_updated": "2025-09-25"
+}</code></pre>
+      </div>
+    </section>
+
+    <section id="faq" class="section alt">
+      <div class="container">
+        <h2>FAQ</h2>
+        <details>
+          <summary>Is PR3TACK a replacement for MITRE ATT&amp;CK?</summary>
+          <p>No. PR3TACK complements ATT&amp;CK by focusing on <em>plausible but unobserved</em> TTPs and the countermeasures to get ahead of them.</p>
+        </details>
+        <details>
+          <summary>How do you assess feasibility?</summary>
+          <p>By weighing OS/firmware constraints, dependency chains, likely attacker capability, and prior adjacent art. Ratings are indicative, and always open to revision via peer review.</p>
+        </details>
+        <details>
+          <summary>What license is the content under?</summary>
+          <p>MIT for the website; content contributions default to CC BY 4.0 unless otherwise specified.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> PR3TACK. Made for defenders, by defenders.</p>
+      <p class="small">This is an open, community-maintained project. No warranties.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js" defer></script>
 </body>
 </html>

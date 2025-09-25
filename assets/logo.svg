@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#60a5fa"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="200" rx="28" fill="#0f172a"/>
+  <g fill="none" stroke="url(#g)" stroke-width="10">
+    <path d="M40 140c120 0 160-80 320-80"/>
+    <path d="M40 170c160 0 200-120 400-120"/>
+    <path d="M40 110c80 0 120-40 200-40"/>
+  </g>
+  <text x="320" y="120" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-weight="700" font-size="54" fill="white">PR3TACK</text>
+  <text x="320" y="160" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="20" fill="#a3bffa">Preemptive Tactics &amp; Countermeasures</text>
+</svg>

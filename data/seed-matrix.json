@@ -1,0 +1,51 @@
+{
+  "version": "0.1.0",
+  "updated": "2025-09-25",
+  "entries": [
+    {
+      "tactic": "Execution",
+      "technique": "BIOS Config Trigger Payloads",
+      "feasibility": "Low",
+      "defense": "Enforce BIOS password & Secure Boot; audit config changes via fleet tooling; require signed firmware updates.",
+      "rationale": "Speculative: abuse firmware setup variables to trigger hidden payload paths post-boot.",
+      "status": "plausible-unobserved",
+      "last_updated": "2025-09-25"
+    },
+    {
+      "tactic": "Persistence",
+      "technique": "Abuse of Windows Atom Tables",
+      "feasibility": "High",
+      "defense": "Monitor Global Atom Table API calls and registry usage; restrict unexpected consumers; detect anomalous inter-process atom usage.",
+      "rationale": "Cross-process storage & signaling channel; research shows viable variants without common IOCs.",
+      "status": "plausible-unobserved",
+      "last_updated": "2025-09-25"
+    },
+    {
+      "tactic": "Privilege Escalation",
+      "technique": "Exploit Virtual Device Drivers (VDDs)",
+      "feasibility": "Medium",
+      "defense": "Restrict unsigned drivers; enable HVCI/Device Guard; audit kernel driver load events and named device objects.",
+      "rationale": "Legacy/compat subsystems and virtual drivers surface risky call paths.",
+      "status": "plausible-unobserved",
+      "last_updated": "2025-09-25"
+    },
+    {
+      "tactic": "Defense Evasion",
+      "technique": "Cloud Metadata API Overloading",
+      "feasibility": "Medium",
+      "defense": "Egress policy on metadata endpoints; metadata proxy with auth; anomaly detection on call volume/headers.",
+      "rationale": "Noisy but feasible to mask exfil/command via internal service endpoints.",
+      "status": "plausible-unobserved",
+      "last_updated": "2025-09-25"
+    },
+    {
+      "tactic": "Command & Control",
+      "technique": "Bluetooth HID Covert Channels",
+      "feasibility": "Medium",
+      "defense": "Disable unused radios; enforce BT policy; monitor pairing events and unusual HID traffic patterns.",
+      "rationale": "Short-range but stealthy C2 via HID profiles.",
+      "status": "plausible-unobserved",
+      "last_updated": "2025-09-25"
+    }
+  ]
+}
