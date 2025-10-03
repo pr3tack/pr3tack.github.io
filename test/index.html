@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PR3TACK — Preemptive Tactics & Countermeasures Knowledgebase</title>
+  <link rel="icon" href="logo.png">
+  <style>
+    :root{
+      --bg:#0f1724; --panel:#0b1220; --accent:#2aa7c8; --muted:#9aa8b2; --card:#0f1724;
+      --glass: rgba(255,255,255,0.03);
+      --content-max:1180px;
+      --radius:8px;
+      --gutter:18px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      color-scheme: dark;
+    }
+    html,body{height:100%; margin:0; background:linear-gradient(180deg,#071428 0%,#0b1220 100%); color:#e6eef3}
+    a{color:var(--accent); text-decoration:none}
+    header.topbar{display:flex; align-items:center; gap:16px; padding:18px 24px; border-bottom:1px solid rgba(255,255,255,0.03)}
+    header.topbar img.logo{height:36px}
+    header.topbar h1{font-size:20px; margin:0; font-weight:600}
+
+    .layout{display:flex; max-width:1200px; margin:28px auto; gap:20px; padding:0 20px}
+
+    /* Left sidebar */
+    nav.sidebar{width:260px; background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01)); border-radius:var(--radius); padding:18px; box-shadow:0 8px 20px rgba(2,6,23,0.6)}
+    nav.sidebar h2{font-size:13px;margin:0 0 12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+    nav.sidebar .navlink{display:block;padding:10px 12px;border-radius:6px;color:#cfe8ef;margin-bottom:6px}
+    nav.sidebar .navlink:hover{background:rgba(255,255,255,0.02)}
+    nav.sidebar .small{font-size:13px;color:var(--muted)}
+
+    /* Main content */
+    section.content{flex:1}
+    .hero{background:linear-gradient(90deg, rgba(42,167,200,0.08), rgba(16,185,129,0.02)); border-radius:var(--radius); padding:22px; display:flex; align-items:center; justify-content:space-between; gap:20px}
+    .hero .title{max-width:760px}
+    .hero h2{margin:0;font-size:22px}
+    .hero p{margin:6px 0 0;color:var(--muted)}
+    .controls{display:flex; gap:12px; align-items:center}
+    .search{background:var(--glass); border:1px solid rgba(255,255,255,0.03); padding:8px 12px; border-radius:8px; display:flex; gap:8px; align-items:center}
+    .search input{background:transparent;border:0;color:inherit;outline:none;width:220px}
+    .btn{background:var(--accent); color:#052028; border:0;padding:8px 12px;border-radius:8px;font-weight:600}
+
+    /* Matrix style */
+    .matrix{margin-top:20px; display:flex; gap:12px; overflow:auto}
+    .tactic-column{min-width:220px; background:rgba(255,255,255,0.02); border-radius:8px; padding:12px; flex:0 0 220px}
+    .tactic-column h4{margin:0 0 8px; font-size:14px}
+    .tech{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); padding:8px; border-radius:6px; margin-bottom:8px; font-size:13px}
+    .tech .meta{color:var(--muted); font-size:12px; margin-top:6px}
+
+    /* Footer */
+    footer{max-width:1200px;margin:28px auto;color:var(--muted);font-size:13px;padding:0 20px}
+
+    /* Responsive */
+    @media (max-width:900px){nav.sidebar{display:none}.layout{margin:12px}}
+
+    /* subtle glass card for details */
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:8px; padding:14px; box-shadow:0 6px 18px rgba(2,6,23,0.5)}
+
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <img src="logo.png" class="logo" alt="PR3TACK">
+    <h1>PR3TACK — Preemptive Tactics & Countermeasures Knowledgebase</h1>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar">
+      <h2>Explore</h2>
+      <a class="navlink" href="#matrix">Matrix</a>
+      <a class="navlink" href="#tactics">Tactics</a>
+      <a class="navlink" href="#examples">Examples</a>
+      <a class="navlink" href="#community">Community</a>
+      <a class="navlink" href="#resources">Resources</a>
+      <hr style="border:0;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0">
+      <div class="small">Seed Matrix v0.1</div>
+      <div class="small" style="margin-top:8px">Status: Draft • Curated by PR3TACK Core Team</div>
+    </nav>
+
+    <section class="content">
+      <div class="hero card">
+        <div class="title">
+          <h2>Anticipate threats — before adversaries exploit them</h2>
+          <p>PR3TACK catalogues plausible-but-unobserved TTPs and maps them to preemptive countermeasures for defenders, vendors and policy makers.</p>
+        </div>
+        <div class="controls">
+          <div class="search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 21l-4.35-4.35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="11" cy="11" r="6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+            <input id="q" placeholder="Search tactics, techniques...">
+          </div>
+          <button class="btn" onclick="toggleFilters()">Filters</button>
+        </div>
+      </div>
+
+      <div id="matrix" class="matrix" aria-live="polite">
+        <div class="tactic-column">
+          <h4>Execution</h4>
+          <div class="tech">
+            Peripheral Firmware Stager
+            <div class="meta">Feasibility: Medium — Defence: Firmware verification, attestation</div>
+          </div>
+          <div class="tech">BIOS Config Trigger Payloads<div class="meta">Feasibility: Low — Defence: Secure Boot, BIOS password</div></div>
+        </div>
+
+        <div class="tactic-column">
+          <h4>Persistence</h4>
+          <div class="tech">Abuse of Windows Atom Tables<div class="meta">Feasibility: High — Defence: Monitor Atom APIs, EDR hooks</div></div>
+          <div class="tech">Hidden Service Registration<div class="meta">Feasibility: Medium — Defence: service creation monitoring</div></div>
+        </div>
+
+        <div class="tactic-column">
+          <h4>Pre-Positioning</h4>
+          <div class="tech">Sleeper OSS Commits<div class="meta">Feasibility: Medium — Defence: code provenance, supply chain audits</div></div>
+          <div class="tech">Credential Seeding<div class="meta">Feasibility: Medium — Defence: credential hygiene, rotation</div></div>
+        </div>
+
+        <div class="tactic-column">
+          <h4>Resilience Erosion</h4>
+          <div class="tech">Backup Corruption<div class="meta">Feasibility: Medium — Defence: immutable backups, recovery drills</div></div>
+          <div class="tech">Mass VM Termination<div class="meta">Feasibility: High — Defence: cloud hardening, guard rails</div></div>
+        </div>
+
+        <div class="tactic-column">
+          <h4>Governance Subversion</h4>
+          <div class="tech">Procurement Account Establishment<div class="meta">Feasibility: Medium — Defence: supplier verification & audits</div></div>
+          <div class="tech">Standards Manipulation<div class="meta">Feasibility: Low — Defence: multi-stakeholder transparency</div></div>
+        </div>
+
+        <div class="tactic-column">
+          <h4>Cognitive Manipulation</h4>
+          <div class="tech">Habituation via Alerts<div class="meta">Feasibility: High — Defence: alert triage, anomaly baselining</div></div>
+          <div class="tech">Adversarial Logs<div class="meta">Feasibility: Medium — Defence: telemetry integrity checks</div></div>
+        </div>
+
+        <div class="tactic-column">
+          <h4>Digital Exhaust</h4>
+          <div class="tech">Telemetry Poisoning<div class="meta">Feasibility: Medium — Defence: multi-source correlation</div></div>
+          <div class="tech">IOC Feed Pollution<div class="meta">Feasibility: Medium — Defence: vetting & reputation scoring</div></div>
+        </div>
+
+      </div>
+
+      <div id="tactics" style="margin-top:20px; display:grid; grid-template-columns:1fr 320px; gap:18px">
+        <div>
+          <div class="card">
+            <h3>Framework Overview</h3>
+            <p>PR3TACK organises tactics and techniques and maps them to preemptive countermeasures. The Matrix is searchable and community-extensible. Techniques are triaged by feasibility and impact.</p>
+            <h4 style="margin-top:12px">How to use</h4>
+            <ol>
+              <li>Browse tactics and techniques in the matrix.</li>
+              <li>Filter by platform, feasibility, or tags.</li>
+              <li>Export a JSON seed or submit a contribution.</li>
+            </ol>
+          </div>
+
+          <div class="card" style="margin-top:14px">
+            <h3>Examples</h3>
+            <p><strong>Atom Table Abuse:</strong> Windows Global Atom table used for cross-process payload retrieval. Captured as Persistence &amp; Defense Evasion.</p>
+            <p><strong>Revix Kill-All-VMs:</strong> Cloud resilience erosion via mass VM termination; captured under Resilience Erosion.</p>
+          </div>
+        </div>
+
+        <aside>
+          <div class="card">
+            <h4>Seed Matrix v0.1</h4>
+            <p class="small">Download: <a href="#">JSON</a> • Contribute: <a href="#community">Submit Technique</a></p>
+            <hr style="border:0;border-top:1px solid rgba(255,255,255,0.03)">
+            <h4>Priority</h4>
+            <p class="small">High = PoC • Medium = Hypothesis • Low = Research</p>
+          </div>
+
+          <div class="card" style="margin-top:12px">
+            <h4>Get Involved</h4>
+            <p class="small">We welcome contributions from CSIRTs, researchers and vendors. Submissions are curated by the PR3TACK Core Team.</p>
+            <p style="margin-top:8px"><a class="btn" href="#community">Contribute</a></p>
+          </div>
+        </aside>
+      </div>
+
+      <div id="examples" style="margin-top:18px">
+        <div class="card">
+          <h3>Case Studies</h3>
+          <h4>Atom Table Abuse</h4>
+          <p>Windows Atom Tables can be abused to store small payloads for cross-process retrieval. Although demonstrated in research, it was not immediately captured in ATT&CK.</p>
+          <h4>Revix Ransomware: Kill-All-VMs</h4>
+          <p>A destructive tactic terminating virtual machines at scale, causing resilience loss. PR3TACK maps this to Resilience Erosion and suggests guard rails and immutable snapshots as defences.</p>
+        </div>
+      </div>
+
+      <div id="community" style="margin-top:18px">
+        <div class="card">
+          <h3>Community Participation</h3>
+          <p>Contributors submit technique descriptions, feasibility assessments, impacts and suggested preemptive defences. Core Team curates and publishes accepted entries.</p>
+          <p>Options for contributor recognition or anonymity.</p>
+        </div>
+      </div>
+
+      <div id="resources" style="margin-top:18px">
+        <div class="card">
+          <h3>Resources & References</h3>
+          <ul>
+            <li>MITRE ATT&CK</li>
+            <li>MITRE D3FEND</li>
+            <li>ENISA Threat Reports</li>
+            <li>NIST CSF</li>
+            <li>PR3TACK Seed Matrix v0.1 (internal)</li>
+          </ul>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <footer>
+    <div style="max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;justify-content:space-between;align-items:center">
+      <div>© PR3TACK Core Team • Draft</div>
+      <div style="color:var(--muted)">CONFIDENTIAL - PR3TACK CORE TEAM - DO NOT SHARE</div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleFilters(){ alert('Filters panel — placeholder (implement filter UI)'); }
+    // Basic client-side search highlighting
+    document.getElementById('q').addEventListener('input', function(e){
+      const q = e.target.value.toLowerCase();
+      document.querySelectorAll('.tech').forEach(function(node){
+        const txt = node.textContent.toLowerCase();
+        node.style.display = q && !txt.includes(q) ? 'none' : 'block';
+      });
+    });
+  </script>
+</body>
+</html>
