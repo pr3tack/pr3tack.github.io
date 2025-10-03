@@ -68,6 +68,9 @@
       <a href="#examples">Examples</a>
       <a href="#community">Community</a>
       <a href="#resources">Resources</a>
+      <hr style="border:0;border-top:1px solid rgba(255,255,255,0.04);margin:12px 0">
+      <div style="font-size:13px;color:var(--muted)">Seed Matrix v0.1 — Table 3</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px">Status: Draft • Curated by PR3TACK Core Team</div>
     </nav>
 
     <section class="content">
@@ -81,30 +84,135 @@
             <input id="q" placeholder="Search tactics, techniques...">
           </div>
           <button class="btn" onclick="toggleFilters()">Filters</button>
+          <a class="btn" href="#" onclick="downloadCSV()">Download CSV</a>
         </div>
       </div>
 
-      <div id="matrix" class="matrix">
+      <div id="matrix" class="matrix" role="region" aria-label="PR3TACK Seed Matrix">
+        <!-- Column: Execution -->
         <div class="tactic-column">
           <h4>Execution</h4>
-          <div class="tech">Peripheral Firmware Stager<div class="meta">Feasibility: Medium — Defence: Firmware verification</div></div>
-          <div class="tech">BIOS Config Trigger Payloads<div class="meta">Feasibility: Low — Defence: Secure Boot</div></div>
+          <div class="tech"><strong>BIOS Config Trigger Payloads</strong><div class="meta">Low — Enforce BIOS password & Secure Boot; audit BIOS config changes; firmware inventory and signing.</div></div>
+          <div class="tech"><strong>Peripheral Firmware Stager</strong><div class="meta">Medium — Vendor firmware verification, restrict peripheral provisioning, allowlist peripheral vendors, attestation for USB devices.</div></div>
         </div>
+
+        <!-- Persistence -->
         <div class="tactic-column">
           <h4>Persistence</h4>
-          <div class="tech">Abuse of Windows Atom Tables<div class="meta">Feasibility: High — Defence: Monitor Atom APIs</div></div>
-          <div class="tech">Hidden Service Registration<div class="meta">Feasibility: Medium — Defence: Service monitoring</div></div>
+          <div class="tech"><strong>Abuse of Windows Atom Tables</strong><div class="meta">High — Monitor GlobalAddAtom/GetAtomName API usage, EDR hooks for Atom APIs, limit unnecessary Global Atom usage.</div></div>
+          <div class="tech"><strong>Hidden Service Registration</strong><div class="meta">Medium — Service creation monitoring, image signing enforcement, service account least-privilege, periodic service inventory.</div></div>
         </div>
+
+        <!-- Privilege Escalation -->
+        <div class="tactic-column">
+          <h4>Privilege Escalation</h4>
+          <div class="tech"><strong>Exploit Virtual Device Drivers (VDDs)</strong><div class="meta">Medium — Restrict loading of unsigned drivers; enable Device Guard; kernel-mode code signing enforcement; driver vetting.</div></div>
+          <div class="tech"><strong>Credential Store Forging</strong><div class="meta">Medium — Credential hygiene, short token lifetimes, monitor unusual credential store writes, token binding where possible.</div></div>
+        </div>
+
+        <!-- Defense Evasion -->
+        <div class="tactic-column">
+          <h4>Defense Evasion</h4>
+          <div class="tech"><strong>Cloud Metadata API Overloading</strong><div class="meta">Medium — Limit access to metadata endpoints, metadata proxying with auth, audit API calls for anomalies, token scope minimization.</div></div>
+          <div class="tech"><strong>Telemetry Tampering</strong><div class="meta">Medium — Agent integrity checks, signed agent updates, out-of-band telemetry integrity verification, multi-path telemetry.</div></div>
+        </div>
+
+        <!-- Command & Control -->
+        <div class="tactic-column">
+          <h4>Command & Control</h4>
+          <div class="tech"><strong>Bluetooth HID Covert Channels</strong><div class="meta">Low — Disable unnecessary Bluetooth services; monitor HID traffic; endpoint controls for wireless interfaces.</div></div>
+          <div class="tech"><strong>Covert DNS-over-HTTPS Tunnels</strong><div class="meta">Medium — DoH proxy allow-listing, recursive resolver controls, inspect DoH at enterprise proxies, behavior-based detection.</div></div>
+        </div>
+
+        <!-- Discovery -->
+        <div class="tactic-column">
+          <h4>Discovery</h4>
+          <div class="tech"><strong>Browser Extension Enumeration via IPC Abuse</strong><div class="meta">Medium — Limit extension API privileges; monitor inter-process communications; browser hardening policies.</div></div>
+          <div class="tech"><strong>Identity Topology Mapping</strong><div class="meta">Medium — Identity flow hardening, federation metadata vetting, privileged identity mapping alerts, least-trust segmentation.</div></div>
+        </div>
+
+        <!-- Collection -->
+        <div class="tactic-column">
+          <h4>Collection</h4>
+          <div class="tech"><strong>Abuse of Clipboard History Services</strong><div class="meta">High — Monitor clipboard access frequency; enforce clipboard isolation in sensitive apps; disable system-wide clipboard history.</div></div>
+          <div class="tech"><strong>Credential Cache Scraping via Accessibility APIs</strong><div class="meta">Medium — Harden accessibility API privilege model, require signed accessibility helpers, monitor accessibility API calls.</div></div>
+        </div>
+
+        <!-- Exfiltration -->
+        <div class="tactic-column">
+          <h4>Exfiltration</h4>
+          <div class="tech"><strong>Leveraging Screen Reader APIs for Data Leak</strong><div class="meta">Medium — Enforce signed driver use for accessibility APIs, limit privileged access to screen buffers, screen-content redaction.</div></div>
+          <div class="tech"><strong>Covert Cloud Storage Staging</strong><div class="meta">Medium — Cloud storage access controls, DLP on uploads, object tagging & provenance checks.</div></div>
+        </div>
+
+        <!-- Lateral Movement -->
+        <div class="tactic-column">
+          <h4>Lateral Movement</h4>
+          <div class="tech"><strong>Software Update Supply Chain Piggybacking (Unpopular Apps)</strong><div class="meta">Medium — Validate software update servers, scan binaries for tampering, allowlisting, supply-chain attestations.</div></div>
+          <div class="tech"><strong>Business-Unit Policy Propagation</strong><div class="meta">Medium — Strict RBAC, entitlement reviews, cross-unit change approvals, admin role segmentation.</div></div>
+        </div>
+
+        <!-- Pre-Positioning -->
+        <div class="tactic-column">
+          <h4>Pre-Positioning</h4>
+          <div class="tech"><strong>OSS Supply-Chain Sleeper Commit</strong><div class="meta">Medium — Code review gating, provenance checks, CI/static analysis, vet third-party dependencies.</div></div>
+          <div class="tech"><strong>Anticipatory Brand/Domain Squatting</strong><div class="meta">High — Brand monitoring, defensive registrations, DMARC/DKIM/SPF enforcement, legal watch.</div></div>
+        </div>
+
+        <!-- Resilience Erosion -->
         <div class="tactic-column">
           <h4>Resilience Erosion</h4>
-          <div class="tech">Backup Corruption<div class="meta">Feasibility: Medium — Defence: Immutable backups</div></div>
-          <div class="tech">Mass VM Termination<div class="meta">Feasibility: High — Defence: Guard rails</div></div>
+          <div class="tech"><strong>Backup Bit-Rot Injection</strong><div class="meta">Medium — Immutable backups, frequent restore drills, end-to-end checksums, out-of-band backup integrity logs.</div></div>
+          <div class="tech"><strong>Patch-Fatigue Campaigns</strong><div class="meta">Medium — Vulnerability triage, vendor-proof verification, centralised patch governance.</div></div>
         </div>
+
+        <!-- Governance Subversion -->
+        <div class="tactic-column">
+          <h4>Governance Subversion</h4>
+          <div class="tech"><strong>Standards/Comments Manipulation</strong><div class="meta">Low — Security/legal representation on standards bodies, review of proposals, internal policy audits.</div></div>
+          <div class="tech"><strong>Procurement Account Establishment</strong><div class="meta">Medium — Supplier verification, contractual security clauses, onboarding attestations, procurement checks.</div></div>
+        </div>
+
+        <!-- Cognitive Manipulation -->
+        <div class="tactic-column">
+          <h4>Cognitive Manipulation</h4>
+          <div class="tech"><strong>Analyst Habituation Lures</strong><div class="meta">High — Adversarial training, alert hygiene, purple-team injects.</div></div>
+          <div class="tech"><strong>Adversarial Log Crafting</strong><div class="meta">Medium — Log-schema validation, sanity checks, rotation of detection logic, threat-hunting heuristics.</div></div>
+        </div>
+
+        <!-- Operational Tempo Manipulation -->
+        <div class="tactic-column">
+          <h4>Operational Tempo Manipulation</h4>
+          <div class="tech"><strong>Holiday/Travel Window Triggering</strong><div class="meta">High — Follow-the-sun coverage, escalation backups, redundancy, travel blackout policies.</div></div>
+          <div class="tech"><strong>Billing/Cost Shock Forcing</strong><div class="meta">Medium — Billing anomaly detection, budget guardrails, immutable infra, throttling policies.</div></div>
+        </div>
+
+        <!-- AI/ML Subversion -->
+        <div class="tactic-column">
+          <h4>AI/ML Subversion</h4>
+          <div class="tech"><strong>Training-Data Seed Poisoning</strong><div class="meta">Medium — Data provenance tracking, dataset signing, validation, adversarial-ML red-team tests.</div></div>
+          <div class="tech"><strong>Model Output Injection</strong><div class="meta">Medium — Model monitoring, output validation, dual-model cross-checks, rejection thresholds.</div></div>
+        </div>
+
+        <!-- Sociotechnical Pressure -->
+        <div class="tactic-column">
+          <h4>Sociotechnical Pressure</h4>
+          <div class="tech"><strong>Investor/Media Narrative Orchestration</strong><div class="meta">Low — Comms + security sync, fact-check pipeline, exec training, pre-approved response plans.</div></div>
+          <div class="tech"><strong>Vendor-Influence Campaigns</strong><div class="meta">Medium — Procurement security checklist, acceptance gates, exec sign-off for major adoptions.</div></div>
+        </div>
+
+        <!-- Digital Exhaust Manipulation -->
+        <div class="tactic-column">
+          <h4>Digital Exhaust Manipulation</h4>
+          <div class="tech"><strong>IOC/Telco Feed Pollution</strong><div class="meta">High — Source reputation scoring, feed vetting, automated IOC quality checks, human review for critical IOCs.</div></div>
+          <div class="tech"><strong>Telemetry Noise Flooding</strong><div class="meta">Medium — Signal-to-noise monitoring, sampling strategies, baselining, telemetry integrity tests.</div></div>
+        </div>
+
       </div>
 
       <div id="tactics" class="card">
         <h3>Framework Overview</h3>
-        <p>PR3TACK organises tactics and techniques and maps them to preemptive countermeasures. Techniques are triaged by feasibility and impact.</p>
+        <p>PR3TACK organises tactics and techniques and maps them to preemptive countermeasures. Techniques are triaged by feasibility and impact. Use the search box to filter techniques across the matrix.</p>
       </div>
 
       <div id="examples" class="card">
@@ -143,6 +251,30 @@
         node.style.display = node.textContent.toLowerCase().includes(q) ? 'block' : 'none';
       });
     });
+
+    function downloadCSV(){
+      const headers = ['Tactic','Technique','Feasibility','Preemptive Defense'];
+      const rows = [];
+      document.querySelectorAll('.tactic-column').forEach(function(col){
+        const tactic = col.querySelector('h4').innerText;
+        col.querySelectorAll('.tech').forEach(function(t){
+          const tech = t.querySelector('strong').innerText;
+          const meta = t.querySelector('.meta').innerText.split('—');
+          const feasibility = meta[0].trim();
+          const defense = meta[1] ? meta[1].trim() : '';
+          rows.push([tactic, tech, feasibility, defense]);
+        });
+      });
+      let csv = headers.join(',') + '
+';
+      rows.forEach(r => csv += '"' + r.join('","') + '"
+');
+      const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'PR3TACK_Seed_Matrix_v0.1.csv';
+      link.click();
+    }
   </script>
 </body>
 </html>
